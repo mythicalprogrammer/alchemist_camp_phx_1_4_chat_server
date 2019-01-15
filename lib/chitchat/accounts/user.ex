@@ -1,13 +1,14 @@
 defmodule Chitchat.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Chitchat.Accounts.Credential
+  #alias Chitchat.Accounts.Credential
 
 
   schema "users" do
     field :name, :string
     field :username, :string
-    has_one :credential, Credential
+    #has_one :credential, Credential
+    has_one :credential, Chitchat.Accounts.Credential
 
     timestamps()
   end

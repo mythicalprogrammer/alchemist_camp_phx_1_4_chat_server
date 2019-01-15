@@ -117,6 +117,19 @@ defmodule Chitchat.Accounts do
 
   alias Chitchat.Accounts.Credential
 
+  def authenticate_by_email_password(email, given_pass) do
+    cred = Repo.get_by(Credential, email: email) |> Repo.preload(:user)
+    cond do
+      cred && checkpw(given_pass, cred.password_hash) ->
+        {:ok, cred.user}
+      cred ->
+        {:error, :unauthorized}
+      true -> 
+        dummy_checkpw()
+        {:error, :not_found}
+    end
+  end
+
   @doc """
   Returns the list of credentials.
 
